@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Fotoğraf Testi</title>
+</head>
+<body>
+    <h1>Fotoğraf Yükleme Testi</h1>
+    <div id="sonuc"></div>
+    
+    <h2>1. Aziz Demir</h2>
+    <img id="img1" style="max-width:200px; border:2px solid red; min-height:100px;">
+    <p id="p1">Yükleniyor...</p>
+    
+    <h2>2. Hatice Reyya Demir</h2>
+    <img id="img2" style="max-width:200px; border:2px solid red; min-height:100px;">
+    <p id="p2">Yükleniyor...</p>
+    
+    <h2>3. Zeynep Rana Bayraktar</h2>
+    <img id="img3" style="max-width:200px; border:2px solid red; min-height:100px;">
+    <p id="p3">Yükleniyor...</p>
+    
+    <hr>
+    <p><strong>Yapmanız gereken:</strong></p>
+    <ol>
+        <li><strong>sunucu-baslat.bat</strong> dosyasına çift tıklayın (bu klasörde)</li>
+        <li>Tarayıcıda: <a href="http://localhost:8080/foto-test.html">http://localhost:8080/foto-test.html</a></li>
+    </ol>
+    <p>Projeyi Türkçe karakter içermeyen bir klasöre kopyalayıp deneyin (örn: C:\rena-site)</p>
+
+    <script>
+        var dosyalar = [
+            ['img1','p1',['aziz-demir.jpg','aziz-demir.png','aziz-demir.jpeg']],
+            ['img2','p2',['hatice-reyya-demir.jpg','hatice-reyya-demir.png','hatice-reyya-demir.jpeg']],
+            ['img3','p3',['zeynep-rana-bayraktar.jpg','zeynep-rana-bayraktar.png','zeynep-rana-bayraktar.jpeg']]
+        ];
+        var base = window.location.origin + '/images/team/';
+        document.getElementById('sonuc').innerHTML = 'Sayfa: ' + window.location.href + '<br>Base: ' + base;
+        
+        function deneme(imgId, pId, adlar, i) {
+            if (i >= adlar.length) {
+                document.getElementById(pId).innerHTML = 'HİÇBİR UZANTI ÇALIŞMADI: .jpg .png .jpeg';
+                return;
+            }
+            var url = base + adlar[i];
+            var img = document.getElementById(imgId);
+            img.onload = function() { document.getElementById(pId).innerHTML = 'OK: ' + adlar[i]; img.style.background='#ccffcc'; };
+            img.onerror = function() { deneme(imgId, pId, adlar, i+1); };
+            img.src = url;
+        }
+        dosyalar.forEach(function(d) { deneme(d[0], d[1], d[2], 0); });
+    </script>
+</body>
+</html>
